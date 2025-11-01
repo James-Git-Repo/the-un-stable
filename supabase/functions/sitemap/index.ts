@@ -1,30 +1,30 @@
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.58.0'
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.58.0";
 
 const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-}
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+};
 
 Deno.serve(async (req) => {
-  if (req.method === 'OPTIONS') {
-    return new Response('ok', { headers: corsHeaders })
+  if (req.method === "OPTIONS") {
+    return new Response("ok", { headers: corsHeaders });
   }
 
   try {
-    const supabaseUrl = Deno.env.get('SUPABASE_URL')!
-    const supabaseKey = Deno.env.get('SUPABASE_ANON_KEY')!
-    const supabase = createClient(supabaseUrl, supabaseKey)
+    const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
+    const supabaseKey = Deno.env.get("SUPABASE_ANON_KEY")!;
+    const supabase = createClient(supabaseUrl, supabaseKey);
 
     // Fetch all articles
     const { data: articles, error } = await supabase
-      .from('Articles')
-      .select('slug, created_at, published_at')
-      .order('published_at', { ascending: false })
+      .from("Articles")
+      .select("slug, created_at, published_at")
+      .order("published_at", { ascending: false });
 
-    if (error) throw error
+    if (error) throw error;
 
     // Get the base URL from the request
-    const baseUrl = new URL(req.url).origin
+    const baseUrl = "https://www.the-un-stable.net";
 
     // Generate sitemap XML
     const xml = `<?xml version="1.0" encoding="UTF-8"?>
@@ -83,31 +83,34 @@ Deno.serve(async (req) => {
     <loc>${baseUrl}/legal/privacy</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>${articles?.map(article => `
+  </url>${
+    articles
+      ?.map(
+        (article) => `
   <url>
     <loc>${baseUrl}/post/${article.slug}</loc>
-    <lastmod>${new Date(article.published_at || article.created_at).toISOString().split('T')[0]}</lastmod>
+    <lastmod>${new Date(article.published_at || article.created_at).toISOString().split("T")[0]}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
-  </url>`).join('') || ''}
-</urlset>`
+  </url>`,
+      )
+      .join("") || ""
+  }
+</urlset>`;
 
     return new Response(xml, {
       headers: {
         ...corsHeaders,
-        'Content-Type': 'application/xml',
-        'Cache-Control': 'public, max-age=3600', // Cache for 1 hour
+        "Content-Type": "application/xml",
+        "Cache-Control": "public, max-age=3600", // Cache for 1 hour
       },
-    })
+    });
   } catch (error) {
-    console.error('Error generating sitemap:', error)
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error'
-    return new Response(
-      JSON.stringify({ error: errorMessage }),
-      {
-        status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      }
-    )
+    console.error("Error generating sitemap:", error);
+    const errorMessage = error instanceof Error ? error.message : "Unknown error";
+    return new Response(JSON.stringify({ error: errorMessage }), {
+      status: 500,
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    });
   }
-})
+});
