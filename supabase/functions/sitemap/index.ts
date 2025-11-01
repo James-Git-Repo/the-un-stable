@@ -15,11 +15,10 @@ Deno.serve(async (req) => {
     const supabaseKey = Deno.env.get('SUPABASE_ANON_KEY')!
     const supabase = createClient(supabaseUrl, supabaseKey)
 
-    // Fetch all published articles
+    // Fetch all articles
     const { data: articles, error } = await supabase
       .from('Articles')
-      .select('slug, updated_at, published_at')
-      .eq('published', true)
+      .select('slug, created_at, published_at')
       .order('published_at', { ascending: false })
 
     if (error) throw error
@@ -87,7 +86,7 @@ Deno.serve(async (req) => {
   </url>${articles?.map(article => `
   <url>
     <loc>${baseUrl}/post/${article.slug}</loc>
-    <lastmod>${new Date(article.updated_at || article.published_at).toISOString().split('T')[0]}</lastmod>
+    <lastmod>${new Date(article.published_at || article.created_at).toISOString().split('T')[0]}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>`).join('') || ''}
