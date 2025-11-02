@@ -12,7 +12,7 @@ import { useEditor } from "@/contexts/EditorContext";
 const NewsletterNew = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const { hasEditorRole, isLoadingRole, session } = useEditor();
+  const { session } = useEditor();
   const [title, setTitle] = useState("");
   const [subtitle, setSubtitle] = useState("");
   const [content, setContent] = useState("");
@@ -98,19 +98,8 @@ const NewsletterNew = () => {
     }
   };
 
-  // Show loading state while checking permissions
-  if (isLoadingRole && session) {
-    return (
-      <main className="container mx-auto px-4 py-8 max-w-4xl">
-        <div className="flex flex-col items-center justify-center py-12">
-          <p className="text-muted-foreground">Loading editor...</p>
-        </div>
-      </main>
-    );
-  }
-
-  // Show access denied if not in editor mode
-  if (!hasEditorRole && !isLoadingRole) {
+  // Show access denied if not logged in
+  if (!session) {
     return (
       <main className="container mx-auto px-4 py-8 max-w-4xl">
         <Button
