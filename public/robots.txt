@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://ivlsawrcootiarfzlbcv.supabase.co/functions/v1/sitemap
+Sitemap: https://www.the-un-stable.net/sitemap.xml
