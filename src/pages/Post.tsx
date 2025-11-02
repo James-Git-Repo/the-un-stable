@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { ArrowLeft, Edit, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
 import { useEditor } from "@/contexts/EditorContext";
-import { ArticleEditor } from "@/components/ArticleEditor";
 import { SafeHTML } from "@/components/SafeHTML";
 import { useToast } from "@/hooks/use-toast";
 import {
@@ -21,12 +20,12 @@ import {
 
 const Post = () => {
   const { slug } = useParams();
-  const { isEditorMode } = useEditor();
+  const navigate = useNavigate();
+  const { session } = useEditor();
   const { toast } = useToast();
   const [post, setPost] = useState<any>(null);
   const [relatedPosts, setRelatedPosts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [showEditor, setShowEditor] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
   const fetchPost = async () => {
@@ -114,12 +113,12 @@ const Post = () => {
           Back to all articles
         </Link>
         
-        {isEditorMode && (
+        {session && (
           <div className="flex gap-2">
             <Button
               variant="outline"
               size="sm"
-              onClick={() => setShowEditor(true)}
+              onClick={() => navigate(`/newsletter/${post.id}/edit`, { state: { article: post } })}
             >
               <Edit className="w-4 h-4 mr-2" />
               Edit
@@ -210,33 +209,22 @@ const Post = () => {
         )}
       </article>
 
-      {post && (
-        <>
-          <ArticleEditor
-            article={post}
-            open={showEditor}
-            onOpenChange={setShowEditor}
-            onUpdate={fetchPost}
-          />
-          
-          <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>Delete Article</AlertDialogTitle>
-                <AlertDialogDescription>
-                  Are you sure you want to delete "{post.title}"? This action cannot be undone.
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction onClick={handleDelete} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
-                  Delete
-                </AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
-        </>
-      )}
+      <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete Article</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to delete "{post.title}"? This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleDelete} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </main>
   );
 };

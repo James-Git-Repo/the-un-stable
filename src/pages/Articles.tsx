@@ -1,4 +1,5 @@
 import { useState, useMemo, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Hero } from "@/components/Hero";
 import { FilterBar } from "@/components/FilterBar";
 import { PostCard } from "@/components/PostCard";
@@ -7,28 +8,15 @@ import { supabase } from "@/integrations/supabase/client";
 import { useEditor } from "@/contexts/EditorContext";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import { ArticleEditor } from "@/components/ArticleEditor";
 
 const Home = () => {
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedTag, setSelectedTag] = useState("all");
   const [posts, setPosts] = useState<any[]>([]);
   const [tags, setTags] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
-  const [showCreateDialog, setShowCreateDialog] = useState(false);
-  const [editingArticle, setEditingArticle] = useState<any>(null);
-  const { isEditorMode } = useEditor();
-
-  const emptyArticle = {
-    id: 0,
-    title: '',
-    subtitle: '',
-    content: '',
-    tag: '',
-    author: 'Editorial Team',
-    read_time: '5 min read',
-    image_url: '',
-  };
+  const { session } = useEditor();
 
   const fetchPosts = async () => {
     setLoading(true);
@@ -79,8 +67,8 @@ const Home = () => {
             tags={tags}
           />
           
-          {isEditorMode && (
-            <Button onClick={() => setShowCreateDialog(true)}>
+          {session && (
+            <Button onClick={() => navigate('/newsletter/new')}>
               <Plus className="w-4 h-4 mr-2" />
               New Article
             </Button>
@@ -113,7 +101,7 @@ const Home = () => {
                   })}
                   readTime={post.read_time}
                   onDelete={fetchPosts}
-                  onEdit={setEditingArticle}
+                  onEdit={(article) => navigate(`/newsletter/${article.id}/edit`, { state: { article } })}
                 />
               ))}
             </div>
@@ -130,22 +118,6 @@ const Home = () => {
       </section>
 
       <MobileSubscribe />
-      
-      <ArticleEditor
-        article={emptyArticle}
-        open={showCreateDialog}
-        onOpenChange={setShowCreateDialog}
-        onUpdate={fetchPosts}
-      />
-      
-      {editingArticle && (
-        <ArticleEditor
-          article={editingArticle}
-          open={!!editingArticle}
-          onOpenChange={(open) => !open && setEditingArticle(null)}
-          onUpdate={fetchPosts}
-        />
-      )}
     </main>
   );
 };

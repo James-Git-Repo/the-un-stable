@@ -1,9 +1,8 @@
 import { useState, useMemo, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { FilterBar } from "@/components/FilterBar";
 import { PostCard } from "@/components/PostCard";
-import { TAGS } from "@/data/mockData";
 import { supabase } from "@/integrations/supabase/client";
-import { ArticleEditor } from "@/components/ArticleEditor";
 import {
   Select,
   SelectContent,
@@ -13,12 +12,13 @@ import {
 } from "@/components/ui/select";
 
 const Archive = () => {
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedTag, setSelectedTag] = useState("all");
   const [sortBy, setSortBy] = useState("latest");
   const [posts, setPosts] = useState<any[]>([]);
+  const [tags, setTags] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
-  const [editingArticle, setEditingArticle] = useState<any>(null);
 
   const fetchPosts = async () => {
     setLoading(true);
@@ -31,6 +31,9 @@ const Archive = () => {
       console.error('Error fetching posts:', error);
     } else {
       setPosts(data || []);
+      // Extract unique tags from articles
+      const uniqueTags = Array.from(new Set(data?.map(article => article.tag).filter(Boolean))) as string[];
+      setTags(uniqueTags);
     }
     setLoading(false);
   };
@@ -85,7 +88,7 @@ const Archive = () => {
           onSearchChange={setSearchQuery}
           selectedTag={selectedTag}
           onTagChange={setSelectedTag}
-          tags={TAGS}
+          tags={tags}
         />
 
         <div className="flex flex-col sm:flex-row gap-4">
@@ -140,7 +143,7 @@ const Archive = () => {
                 })}
                 readTime={post.read_time}
                 onDelete={fetchPosts}
-                onEdit={setEditingArticle}
+                onEdit={(article) => navigate(`/newsletter/${article.id}/edit`, { state: { article } })}
               />
             ))}
           </div>
@@ -153,15 +156,6 @@ const Archive = () => {
             </div>
           )}
         </>
-      )}
-      
-      {editingArticle && (
-        <ArticleEditor
-          article={editingArticle}
-          open={!!editingArticle}
-          onOpenChange={(open) => !open && setEditingArticle(null)}
-          onUpdate={fetchPosts}
-        />
       )}
     </main>
   );
