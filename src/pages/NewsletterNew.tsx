@@ -21,6 +21,8 @@ const NewsletterNew = () => {
   const [coverPreview, setCoverPreview] = useState("");
   const [saving, setSaving] = useState(false);
 
+  console.log('NewsletterNew component mounted');
+
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
