@@ -125,6 +125,8 @@ interface RichTextEditorProps {
 export const RichTextEditor = ({ content, onChange, placeholder = 'Start writing your article...' }: RichTextEditorProps) => {
   const [isDirty, setIsDirty] = useState(false);
   
+  console.log('RichTextEditor rendering, content length:', content?.length);
+  
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
@@ -202,7 +204,12 @@ export const RichTextEditor = ({ content, onChange, placeholder = 'Start writing
   }, [isDirty]);
 
   if (!editor) {
-    return null;
+    console.log('Editor not ready yet, returning loading state');
+    return (
+      <div className="border rounded-lg p-6 bg-background">
+        <p className="text-muted-foreground">Loading editor...</p>
+      </div>
+    );
   }
 
   const ToolbarButton = ({

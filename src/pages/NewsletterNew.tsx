@@ -102,7 +102,10 @@ const NewsletterNew = () => {
     <main className="container mx-auto px-4 py-8 max-w-4xl">
       <Button
         variant="ghost"
-        onClick={() => navigate('/newsletter')}
+        onClick={() => {
+          console.log('Back button clicked');
+          navigate('/newsletter');
+        }}
         className="mb-6"
       >
         <ArrowLeft className="w-4 h-4 mr-2" />
