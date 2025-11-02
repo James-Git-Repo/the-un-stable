@@ -22,6 +22,7 @@ import Privacy from "./pages/Privacy";
 import NotFound from "./pages/NotFound";
 import About from "./pages/About";
 import Resources from "./pages/Resources";
+import Sitemap from "./pages/Sitemap";
 
 const queryClient = new QueryClient();
 
@@ -48,6 +49,7 @@ const App = () => (
               <Route path="/contribute" element={<Contribute />} />
               <Route path="/about" element={<About />} />
               <Route path="/resources" element={<Resources />} />
+              <Route path="/sitemap.xml" element={<Sitemap />} />
               <Route path="/legal/terms" element={<Terms />} />
               <Route path="/legal/privacy" element={<Privacy />} />
               <Route path="*" element={<NotFound />} />
