@@ -12,7 +12,7 @@ import { useEditor } from "@/contexts/EditorContext";
 const NewsletterNew = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const { isEditorMode, isLoadingRole, session } = useEditor();
+  const { hasEditorRole, isLoadingRole, session } = useEditor();
   const [title, setTitle] = useState("");
   const [subtitle, setSubtitle] = useState("");
   const [content, setContent] = useState("");
@@ -110,7 +110,7 @@ const NewsletterNew = () => {
   }
 
   // Show access denied if not in editor mode
-  if (!isEditorMode) {
+  if (!hasEditorRole && !isLoadingRole) {
     return (
       <main className="container mx-auto px-4 py-8 max-w-4xl">
         <Button

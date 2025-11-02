@@ -13,7 +13,7 @@ const Newsletter = () => {
   const [posts, setPosts] = useState<any[]>([]);
   const [tags, setTags] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
-  const { isEditorMode } = useEditor();
+  const { hasEditorRole } = useEditor();
   const navigate = useNavigate();
 
   const fetchPosts = async () => {
@@ -67,7 +67,7 @@ const Newsletter = () => {
           tags={tags}
         />
         
-        {isEditorMode && (
+        {hasEditorRole && (
           <Button onClick={() => navigate('/newsletter/new')}>
             <Plus className="w-4 h-4 mr-2" />
             New Article

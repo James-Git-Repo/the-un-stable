@@ -4,6 +4,7 @@ import { supabase } from '@/integrations/supabase/client';
 
 interface EditorContextType {
   isEditorMode: boolean;
+  hasEditorRole: boolean;
   session: Session | null;
   showLoginDialog: boolean;
   setShowLoginDialog: (show: boolean) => void;
@@ -133,6 +134,7 @@ export const EditorProvider = ({ children }: { children: React.ReactNode }) => {
     <EditorContext.Provider
       value={{
         isEditorMode: !!session && hasEditorRole,
+        hasEditorRole,
         session,
         showLoginDialog,
         setShowLoginDialog,
