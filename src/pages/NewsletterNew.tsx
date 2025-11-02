@@ -6,13 +6,11 @@ import { Label } from "@/components/ui/label";
 import { RichTextEditor } from "@/components/RichTextEditor";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { ArrowLeft, Upload, Lock } from "lucide-react";
-import { useEditor } from "@/contexts/EditorContext";
+import { ArrowLeft, Upload } from "lucide-react";
 
 const NewsletterNew = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const { session } = useEditor();
   const [title, setTitle] = useState("");
   const [subtitle, setSubtitle] = useState("");
   const [content, setContent] = useState("");
@@ -97,33 +95,6 @@ const NewsletterNew = () => {
       setSaving(false);
     }
   };
-
-  // Show access denied if not logged in
-  if (!session) {
-    return (
-      <main className="container mx-auto px-4 py-8 max-w-4xl">
-        <Button
-          variant="ghost"
-          onClick={() => navigate('/newsletter')}
-          className="mb-6"
-        >
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          Back to Newsletter
-        </Button>
-
-        <div className="flex flex-col items-center justify-center py-12 space-y-4">
-          <Lock className="w-16 h-16 text-muted-foreground" />
-          <h1 className="text-2xl font-bold">Editor Access Required</h1>
-          <p className="text-muted-foreground text-center max-w-md">
-            You need to be logged in as an editor to create new articles. Please sign in with your editor account.
-          </p>
-          <Button onClick={() => navigate('/newsletter')} variant="outline">
-            Go Back to Newsletter
-          </Button>
-        </div>
-      </main>
-    );
-  }
 
   return (
     <main className="container mx-auto px-4 py-8 max-w-4xl">
