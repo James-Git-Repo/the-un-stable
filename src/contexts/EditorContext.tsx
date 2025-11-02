@@ -9,6 +9,7 @@ interface EditorContextType {
   setShowLoginDialog: (show: boolean) => void;
   signIn: (email: string, password: string) => Promise<{ error: any }>;
   signOut: () => Promise<void>;
+  isLoadingRole: boolean;
 }
 
 const EditorContext = createContext<EditorContextType | undefined>(undefined);
@@ -17,9 +18,11 @@ export const EditorProvider = ({ children }: { children: React.ReactNode }) => {
   const [session, setSession] = useState<Session | null>(null);
   const [showLoginDialog, setShowLoginDialog] = useState(false);
   const [hasEditorRole, setHasEditorRole] = useState(false);
+  const [isLoadingRole, setIsLoadingRole] = useState(false);
 
   // Check if user has editor or admin role
   const checkEditorRole = async (userId: string) => {
+    setIsLoadingRole(true);
     try {
       const { data, error } = await supabase.rpc('has_role', {
         _user_id: userId,
@@ -28,6 +31,7 @@ export const EditorProvider = ({ children }: { children: React.ReactNode }) => {
       
       if (error) {
         console.error('Error checking editor role:', error);
+        setIsLoadingRole(false);
         return false;
       }
       
@@ -39,12 +43,15 @@ export const EditorProvider = ({ children }: { children: React.ReactNode }) => {
       
       if (adminError) {
         console.error('Error checking admin role:', adminError);
+        setIsLoadingRole(false);
         return false;
       }
       
+      setIsLoadingRole(false);
       return data === true || adminData === true;
     } catch (err) {
       console.error('Error in checkEditorRole:', err);
+      setIsLoadingRole(false);
       return false;
     }
   };
@@ -120,6 +127,7 @@ export const EditorProvider = ({ children }: { children: React.ReactNode }) => {
         setShowLoginDialog,
         signIn,
         signOut,
+        isLoadingRole,
       }}
     >
       {children}
