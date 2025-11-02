@@ -15,7 +15,7 @@ export const SafeHTML = ({ html, className }: SafeHTMLProps) => {
   
   return (
     <div 
-      className={className}
+      className={`prose prose-slate max-w-none ${className || ''}`}
       dangerouslySetInnerHTML={{ __html: sanitizedHTML }} 
     />
   );
