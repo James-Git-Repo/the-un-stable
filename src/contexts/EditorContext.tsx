@@ -18,7 +18,7 @@ export const EditorProvider = ({ children }: { children: React.ReactNode }) => {
   const [session, setSession] = useState<Session | null>(null);
   const [showLoginDialog, setShowLoginDialog] = useState(false);
   const [hasEditorRole, setHasEditorRole] = useState(false);
-  const [isLoadingRole, setIsLoadingRole] = useState(false);
+  const [isLoadingRole, setIsLoadingRole] = useState(true); // Start as true to check on mount
 
   // Check if user has editor or admin role
   const checkEditorRole = async (userId: string) => {
@@ -60,25 +60,36 @@ export const EditorProvider = ({ children }: { children: React.ReactNode }) => {
     // Set up auth state listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, session) => {
+        console.log('Auth state changed:', event, session?.user?.id);
         setSession(session);
         
         // Check role when session changes
         if (session?.user) {
           setTimeout(() => {
-            checkEditorRole(session.user.id).then(setHasEditorRole);
+            checkEditorRole(session.user.id).then((hasRole) => {
+              console.log('Editor role check result:', hasRole);
+              setHasEditorRole(hasRole);
+            });
           }, 0);
           setShowLoginDialog(false);
         } else {
           setHasEditorRole(false);
+          setIsLoadingRole(false);
         }
       }
     );
 
-    // Check for existing session
+    // Check for existing session on mount
     supabase.auth.getSession().then(({ data: { session } }) => {
+      console.log('Initial session check:', session?.user?.id);
       setSession(session);
       if (session?.user) {
-        checkEditorRole(session.user.id).then(setHasEditorRole);
+        checkEditorRole(session.user.id).then((hasRole) => {
+          console.log('Initial editor role check result:', hasRole);
+          setHasEditorRole(hasRole);
+        });
+      } else {
+        setIsLoadingRole(false);
       }
     });
 
