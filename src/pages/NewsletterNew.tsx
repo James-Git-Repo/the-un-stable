@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { RichTextEditor } from "@/components/RichTextEditor";
+import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { ArrowLeft, Upload } from "lucide-react";
@@ -20,8 +20,6 @@ const NewsletterNew = () => {
   const [coverImage, setCoverImage] = useState<File | null>(null);
   const [coverPreview, setCoverPreview] = useState("");
   const [saving, setSaving] = useState(false);
-
-  console.log('NewsletterNew component mounted');
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -81,16 +79,16 @@ const NewsletterNew = () => {
       }
 
       toast({
-        title: "Article created",
-        description: "Your article has been published successfully.",
+        title: "Articolo creato",
+        description: "L'articolo è stato pubblicato con successo.",
       });
 
       navigate('/newsletter');
     } catch (error: any) {
       console.error('Error creating article:', error);
       toast({
-        title: "Error",
-        description: error.message || "Failed to create article. Please try again.",
+        title: "Errore",
+        description: error.message || "Impossibile creare l'articolo. Riprova.",
         variant: "destructive",
       });
     } finally {
@@ -102,37 +100,36 @@ const NewsletterNew = () => {
     <main className="container mx-auto px-4 py-8 max-w-4xl">
       <Button
         variant="ghost"
-        onClick={() => {
-          console.log('Back button clicked');
-          navigate('/newsletter');
-        }}
+        onClick={() => navigate('/newsletter')}
         className="mb-6"
       >
         <ArrowLeft className="w-4 h-4 mr-2" />
-        Back to Newsletter
+        Torna alla Newsletter
       </Button>
 
-      <h1 className="text-3xl md:text-4xl font-bold mb-8">Create New Article</h1>
+      <h1 className="text-3xl md:text-4xl font-bold mb-8">Crea Nuovo Articolo</h1>
 
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
-          <Label htmlFor="title">Title *</Label>
+          <Label htmlFor="title">Titolo *</Label>
           <Input
             id="title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
             className="mt-1"
+            placeholder="Inserisci il titolo dell'articolo"
           />
         </div>
 
         <div>
-          <Label htmlFor="subtitle">Subtitle</Label>
+          <Label htmlFor="subtitle">Sottotitolo</Label>
           <Input
             id="subtitle"
             value={subtitle}
             onChange={(e) => setSubtitle(e.target.value)}
             className="mt-1"
+            placeholder="Inserisci il sottotitolo (opzionale)"
           />
         </div>
 
@@ -142,7 +139,7 @@ const NewsletterNew = () => {
             id="tag"
             value={tag}
             onChange={(e) => setTag(e.target.value)}
-            placeholder="e.g., Banks, Energy, Tech"
+            placeholder="es: Banks, Energy, Tech"
             required
             className="mt-1"
           />
@@ -150,7 +147,7 @@ const NewsletterNew = () => {
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <Label htmlFor="author">Author</Label>
+            <Label htmlFor="author">Autore</Label>
             <Input
               id="author"
               value={author}
@@ -160,7 +157,7 @@ const NewsletterNew = () => {
           </div>
 
           <div>
-            <Label htmlFor="readTime">Read Time</Label>
+            <Label htmlFor="readTime">Tempo di Lettura</Label>
             <Input
               id="readTime"
               value={readTime}
@@ -171,16 +168,16 @@ const NewsletterNew = () => {
         </div>
 
         <div>
-          <Label htmlFor="cover">Cover Image</Label>
+          <Label htmlFor="cover">Immagine di Copertina</Label>
           <div className="mt-1">
             <label htmlFor="cover" className="cursor-pointer">
               <div className="border-2 border-dashed border-border rounded-lg p-6 text-center hover:border-primary transition-colors">
                 {coverPreview ? (
-                  <img src={coverPreview} alt="Cover preview" className="max-h-64 mx-auto rounded-lg" />
+                  <img src={coverPreview} alt="Anteprima copertina" className="max-h-64 mx-auto rounded-lg" />
                 ) : (
                   <div className="space-y-2">
                     <Upload className="w-8 h-8 mx-auto text-muted-foreground" />
-                    <p className="text-sm text-muted-foreground">Click to upload cover image</p>
+                    <p className="text-sm text-muted-foreground">Clicca per caricare l'immagine di copertina</p>
                   </div>
                 )}
               </div>
@@ -196,18 +193,26 @@ const NewsletterNew = () => {
         </div>
 
         <div>
-          <Label>Content *</Label>
-          <div className="mt-1">
-            <RichTextEditor content={content} onChange={setContent} />
-          </div>
+          <Label htmlFor="content">Contenuto * (HTML supportato)</Label>
+          <Textarea
+            id="content"
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            required
+            className="mt-1 min-h-[400px] font-mono text-sm"
+            placeholder="Scrivi il contenuto dell'articolo qui. Puoi usare HTML per la formattazione."
+          />
+          <p className="text-xs text-muted-foreground mt-2">
+            Puoi usare tag HTML come &lt;p&gt;, &lt;h2&gt;, &lt;strong&gt;, &lt;em&gt;, &lt;ul&gt;, &lt;li&gt;, ecc.
+          </p>
         </div>
 
         <div className="flex gap-4">
           <Button type="submit" disabled={saving}>
-            {saving ? "Publishing..." : "Publish Article"}
+            {saving ? "Pubblicazione..." : "Pubblica Articolo"}
           </Button>
           <Button type="button" variant="outline" onClick={() => navigate('/newsletter')}>
-            Cancel
+            Annulla
           </Button>
         </div>
       </form>
