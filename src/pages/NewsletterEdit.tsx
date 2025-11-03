@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { RichTextEditor } from "@/components/RichTextEditor";
+import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { ArrowLeft, Upload } from "lucide-react";
@@ -233,10 +233,15 @@ const NewsletterEdit = () => {
         </div>
 
         <div>
-          <Label>Content *</Label>
-          <div className="mt-1">
-            <RichTextEditor content={content} onChange={setContent} />
-          </div>
+          <Label htmlFor="content">Content (HTML supported) *</Label>
+          <Textarea
+            id="content"
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            required
+            className="mt-1 min-h-[400px] font-mono"
+            placeholder="Enter article content here. HTML tags are supported."
+          />
         </div>
 
         <div className="flex gap-4">
