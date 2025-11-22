@@ -379,44 +379,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Social Links Section */}
-      <section className="container mx-auto px-4 pb-20 relative z-10">
-        <div className="bg-gradient-to-br from-[#D4A574]/20 via-[#C89B68]/10 to-[#B8865A]/20 dark:from-[#2a1f15]/50 dark:via-[#3d2a1a]/30 dark:to-[#1f1812]/50 rounded-2xl p-8 md:p-12">
-          <h3 className="text-2xl font-bold font-body mb-8 text-center">Connect with me</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <a
-              href="https://www.linkedin.com/in/jacopo-berton-16a69424b/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex flex-col items-center gap-3 p-6 bg-background/60 backdrop-blur-sm rounded-xl hover:bg-background/80 transition-all hover:scale-105"
-            >
-              <Linkedin className="w-10 h-10 text-primary" />
-              <span className="text-sm font-body text-foreground">LinkedIn</span>
-            </a>
-            <a
-              href="https://github.com/James-Git-Repo"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex flex-col items-center gap-3 p-6 bg-background/60 backdrop-blur-sm rounded-xl hover:bg-background/80 transition-all hover:scale-105"
-            >
-              <Github className="w-10 h-10 text-primary" />
-              <span className="text-sm font-body text-foreground">GitHub</span>
-            </a>
-            <a
-              href="https://x.com/JacopoBerton"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex flex-col items-center gap-3 p-6 bg-background/60 backdrop-blur-sm rounded-xl hover:bg-background/80 transition-all hover:scale-105"
-            >
-              <svg className="w-10 h-10 text-primary" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-              </svg>
-              <span className="text-sm font-body text-foreground">X (Twitter)</span>
-            </a>
-          </div>
-        </div>
-      </section>
-
       {/* Edit Project Dialog */}
       <Dialog open={!!editingProject} onOpenChange={() => setEditingProject(null)}>
         <DialogContent>
