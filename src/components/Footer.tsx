@@ -135,7 +135,7 @@ export const Footer = () => {
             {/* Social Links - Left */}
             <div className="flex flex-col gap-3">
               <a 
-                href="https://linkedin.com" 
+                href="https://www.linkedin.com/in/jacopo-berton-16a69424b/" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 group"
@@ -146,7 +146,7 @@ export const Footer = () => {
                 <span className="text-foreground font-body text-sm font-medium">LinkedIn</span>
               </a>
               <a 
-                href="https://github.com" 
+                href="https://github.com/James-Git-Repo" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 group"
