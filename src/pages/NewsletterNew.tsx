@@ -60,7 +60,7 @@ const NewsletterNew = () => {
       const slug = `${baseSlug}-${Date.now()}`;
 
       // Insert article
-      const { error: insertError } = await supabase
+      const { data: newArticle, error: insertError } = await supabase
         .from('Articles')
         .insert({
           title,
@@ -71,11 +71,28 @@ const NewsletterNew = () => {
           read_time: readTime,
           image_url: imageUrl,
           slug,
-        });
+        })
+        .select()
+        .single();
 
       if (insertError) {
         console.error('Insert error:', insertError);
         throw insertError;
+      }
+
+      // Send notifications to subscribers
+      try {
+        await supabase.functions.invoke('notify-subscribers', {
+          body: {
+            articleId: newArticle.id,
+            articleTitle: title,
+            articleSubtitle: subtitle,
+            articleSlug: slug,
+          },
+        });
+      } catch (notifyError) {
+        console.error('Error sending notifications:', notifyError);
+        // Don't fail the article creation if notifications fail
       }
 
       toast({
