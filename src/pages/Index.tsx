@@ -315,8 +315,8 @@ const Index = () => {
                   <Pencil className="w-4 h-4" />
                 </Button>
               )}
-              <h3 className="text-2xl font-bold font-body mb-3">The Million Slots AI Billboard</h3>
-              <p className="text-muted-foreground font-body mb-6">A 1,000,000-tile digital mosaic of AI micro-videos</p>
+              <h3 className="text-2xl font-bold font-body mb-3">The "AI Billboard Project"</h3>
+              <p className="text-muted-foreground font-body mb-6">Where Art and Advertising come together</p>
               {projectCovers["million-slots"].imageUrl ? (
                 <div className="aspect-video rounded-lg overflow-hidden">
                   <img
