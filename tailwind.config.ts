@@ -15,20 +15,20 @@ export default {
     extend: {
       fontFamily: {
         sans: [
-          'Roboto',
-          '-apple-system',
-          'BlinkMacSystemFont',
-          'system-ui',
-          'sans-serif',
+          'Bodoni MT',
+          'Bodoni Moda',
+          'Georgia',
+          'serif',
         ],
         navbar: [
-          'Orbitron',
-          'Berlin Sans FB Demi',
-          'Arial Black',
-          'sans-serif',
+          'Bodoni MT',
+          'Bodoni Moda',
+          'Georgia',
+          'serif',
         ],
         hero: [
-          'Times New Roman',
+          'Bodoni MT',
+          'Bodoni Moda',
           'Georgia',
           'serif',
         ],
@@ -39,7 +39,8 @@ export default {
           'serif',
         ],
         title: [
-          'Times New Roman',
+          'Bodoni MT',
+          'Bodoni Moda',
           'Georgia',
           'serif',
         ],
