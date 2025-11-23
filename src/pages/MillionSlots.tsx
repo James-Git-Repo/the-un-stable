@@ -8,12 +8,17 @@ const MillionSlots = () => {
         <p className="text-xl text-muted-foreground mb-8">
           Join the future of visual value generation by clicking on the video below
         </p>
-        <div className="aspect-video rounded-lg overflow-hidden bg-black">
+        <a 
+          href="https://msab.the-un-stable.net/" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="block aspect-video rounded-lg overflow-hidden bg-black cursor-pointer hover:opacity-90 transition-opacity"
+        >
           <video className="w-full h-full object-cover" autoPlay loop muted playsInline>
             <source src={billboardVideo} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
-        </div>
+        </a>
       </div>
     </main>
   );
