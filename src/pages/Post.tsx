@@ -7,6 +7,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useEditor } from "@/contexts/EditorContext";
 import { SafeHTML } from "@/components/SafeHTML";
 import { useToast } from "@/hooks/use-toast";
+import { CommentSection } from "@/components/CommentSection";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -181,6 +182,8 @@ const Post = () => {
             </Link>
           </div>
         </div>
+
+        <CommentSection articleId={post.id} />
 
         {relatedPosts.length > 0 && (
           <div className="mt-8 sm:mt-10 md:mt-12">
