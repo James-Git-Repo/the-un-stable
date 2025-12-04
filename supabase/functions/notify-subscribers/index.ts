@@ -59,7 +59,8 @@ const handler = async (req: Request): Promise<Response> => {
     const emailPromises = subscribers.map(async (subscriber) => {
       try {
         await resend.emails.send({
-          from: "The (un)Stable Net <the.un.stablenet@gmail.com>",
+          from: "The (un)Stable Net <onboarding@resend.dev>",
+          replyTo: "the.un.stablenet@gmail.com",
           to: [subscriber.email],
           subject: `New Article: ${articleTitle}`,
           html: `
