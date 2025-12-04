@@ -48,6 +48,15 @@ export const SubscribeDialog = ({ open, onOpenChange }: SubscribeDialogProps) =>
 
       if (error) throw error;
 
+      // Send welcome email
+      try {
+        await supabase.functions.invoke('send-welcome-email', {
+          body: { email }
+        });
+      } catch (emailError) {
+        console.error('Failed to send welcome email:', emailError);
+      }
+
       toast({
         title: "Successfully subscribed!",
         description: "You'll receive our next newsletter soon.",

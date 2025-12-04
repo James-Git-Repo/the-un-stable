@@ -8,6 +8,7 @@ import { Mail } from "lucide-react";
 import { useEditor } from "@/contexts/EditorContext";
 import { RichTextEditor } from "@/components/RichTextEditor";
 import { SafeHTML } from "@/components/SafeHTML";
+import { supabase } from "@/integrations/supabase/client";
 
 const Subscribe = () => {
   const [email, setEmail] = useState("");
@@ -36,16 +37,40 @@ const Subscribe = () => {
 
     setIsSubmitting(true);
     
-    // TODO: Wire to actual email service
-    setTimeout(() => {
+    try {
+      const { error } = await supabase
+        .from('Newsletter Sub')
+        .insert({
+          email: email,
+          policy_agreement: consent,
+        });
+
+      if (error) throw error;
+
+      // Send welcome email
+      try {
+        await supabase.functions.invoke('send-welcome-email', {
+          body: { email }
+        });
+      } catch (emailError) {
+        console.error('Failed to send welcome email:', emailError);
+      }
+
       toast({
         title: "Successfully subscribed!",
         description: "You'll receive our next newsletter soon.",
       });
       setEmail("");
       setConsent(false);
+    } catch (error) {
+      toast({
+        title: "Subscription failed",
+        description: "Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
       setIsSubmitting(false);
-    }, 1000);
+    }
   };
 
   return (
