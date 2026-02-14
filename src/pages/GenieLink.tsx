@@ -60,7 +60,7 @@ const GenieLink = () => {
         </p>
 
         <a
-          href="https://genielink.me"
+          href="https://genielink.org/"
           target="_blank"
           rel="noopener noreferrer"
         >
