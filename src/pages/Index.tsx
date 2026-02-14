@@ -17,11 +17,9 @@ const Index = () => {
   const [projectCovers, setProjectCovers] = useState<{
     newsletter: { id: number | null; imageUrl: string };
     "million-slots": { id: number | null; imageUrl: string };
-    "coming-soon": { id: number | null; imageUrl: string };
   }>({
     newsletter: { id: null, imageUrl: "" },
     "million-slots": { id: null, imageUrl: "" },
-    "coming-soon": { id: null, imageUrl: "" },
   });
   const [uploading, setUploading] = useState(false);
 
@@ -36,12 +34,10 @@ const Index = () => {
         if (data) {
           const newsletter = data.find((cover) => cover.name === "newsletter");
           const millionSlots = data.find((cover) => cover.name === "million-slots");
-          const comingSoon = data.find((cover) => cover.name === "coming-soon");
 
           setProjectCovers({
             newsletter: { id: newsletter?.id || null, imageUrl: newsletter?.image || "" },
             "million-slots": { id: millionSlots?.id || null, imageUrl: millionSlots?.image || "" },
-            "coming-soon": { id: comingSoon?.id || null, imageUrl: comingSoon?.image || "" },
           });
         }
       } catch (error) {
@@ -347,24 +343,11 @@ const Index = () => {
           {/* Card C - GenieLink */}
           <Link to="/genielink" className="block group">
             <div className="bg-background/80 backdrop-blur-sm rounded-lg p-6 h-full border border-border hover:scale-105 hover:shadow-xl transition-all duration-300 transform relative">
-              {isEditorMode && (
-                <Button
-                  size="sm"
-                  variant="secondary"
-                  className="absolute top-2 right-2 z-10"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setEditingProject("coming-soon");
-                  }}
-                >
-                  <Pencil className="w-4 h-4" />
-                </Button>
-              )}
               <h3 className="text-2xl font-bold font-body mb-3">GenieLink</h3>
               <p className="text-muted-foreground font-body mb-6">A free link-in-bio platform to centralize your online presence — no cost, no complexity.</p>
               <div className="aspect-video rounded-lg overflow-hidden">
                 <img
-                  src={projectCovers["coming-soon"].imageUrl || genieLinkCover}
+                  src={genieLinkCover}
                   alt="GenieLink cover"
                   className="w-full h-full object-cover"
                 />
