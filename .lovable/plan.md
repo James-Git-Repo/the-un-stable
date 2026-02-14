@@ -1,25 +1,18 @@
 
 
-## Replace GenieLink Cover Image
+## Remove "Coming Soon" Cover Override
 
-The GenieLink card on the homepage still displays the old "Coming Soon" lock/padlock image. It needs to be replaced with a **genie lamp** illustration that matches the visual style of the other two project covers:
-
-- **Newsletter cover**: dark brown background, orange monoline line-art of financial/chart icons
-- **AI Billboard cover**: dark brown background, orange monoline line-art of a VR figure with media icons
+The GenieLink card currently loads its image from the Supabase `Covers` table entry named `"coming-soon"` first, and only falls back to the local `cover-genielink.jpg` asset if no Supabase record exists. Since the old "Coming Soon" padlock image is stored in Supabase, it keeps overriding the new genie lamp asset.
 
 ### What will change
 
 | File | Change |
 |------|--------|
-| `src/assets/cover-genielink.jpg` | Regenerate with a genie lamp illustration in the same dark brown background + orange outline-only line-art style |
+| `src/pages/Index.tsx` | Remove the Supabase cover override for the GenieLink card -- always use the local `genieLinkCover` import directly instead of `projectCovers["coming-soon"].imageUrl \|\| genieLinkCover` |
+| `src/pages/Index.tsx` | Remove the `"coming-soon"` key from `projectCovers` state and the related fetch logic, since it's no longer needed |
+| `src/pages/Index.tsx` | Update the editor mode pencil button from `setEditingProject("coming-soon")` to `setEditingProject("genielink")` (or remove it if cover editing via Supabase is no longer needed for this card) |
 
-### Image specification
+### Result
 
-- Dark brown/charcoal background (matching the exact tones of the other two covers)
-- Orange monoline line-art (thin outlines, no fills)
-- Central genie lamp with magical elements (sparkles, links/chains, or connected nodes rising from the lamp)
-- No text overlays (no "Coming Soon" or any other text)
-- Same landscape aspect ratio as the other covers
-
-No code changes are needed -- only the image asset will be replaced. The existing `import genieLinkCover` and `<img>` references will automatically pick up the new file.
+The GenieLink card will always display the locally imported `cover-genielink.jpg` (the genie lamp), ignoring any old Supabase "coming-soon" record.
 
