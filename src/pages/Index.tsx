@@ -343,25 +343,24 @@ const Index = () => {
             </div>
           </Link>
 
-          {/* Card C - Coming Soon - Not Clickable */}
-          <div
-            className="bg-background/60 backdrop-blur-sm rounded-lg p-6 h-full border border-border opacity-50 saturate-50 pointer-events-none relative"
-            aria-disabled="true"
-          >
-            {isEditorMode && (
-              <Button
-                size="sm"
-                variant="secondary"
-                className="absolute top-2 right-2 z-10"
-                onClick={() => {
-                  setEditingProject("coming-soon");
-                }}
-              >
-                <Pencil className="w-4 h-4" />
-              </Button>
-            )}
-            <h3 className="text-2xl font-bold font-body mb-3">Coming soon</h3>
-            <p className="text-muted-foreground font-body mb-6">New projects and deep dives are landing shortly.</p>
+          {/* Card C - GenieLink */}
+          <a href="https://genielink.me" target="_blank" rel="noopener noreferrer" className="block group">
+            <div className="bg-background/80 backdrop-blur-sm rounded-lg p-6 h-full border border-border hover:scale-105 hover:shadow-xl transition-all duration-300 transform relative">
+              {isEditorMode && (
+                <Button
+                  size="sm"
+                  variant="secondary"
+                  className="absolute top-2 right-2 z-10"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setEditingProject("coming-soon");
+                  }}
+                >
+                  <Pencil className="w-4 h-4" />
+                </Button>
+              )}
+              <h3 className="text-2xl font-bold font-body mb-3">GenieLink</h3>
+              <p className="text-muted-foreground font-body mb-6">A free link-in-bio platform to centralize your online presence — no cost, no complexity.</p>
             {projectCovers["coming-soon"].imageUrl ? (
               <div className="aspect-video rounded-lg overflow-hidden">
                 <img
@@ -375,7 +374,8 @@ const Index = () => {
                 <div className="w-32 h-32 rounded-full bg-gradient-to-br from-primary to-accent opacity-40 animate-pulse" />
               </div>
             )}
-          </div>
+            </div>
+          </a>
         </div>
       </section>
 
