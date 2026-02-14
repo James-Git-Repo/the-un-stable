@@ -1,31 +1,28 @@
 
 
-## GenieLink Card Updates
+## Update GenieLink Cover Image
 
-### 1. Create a new GenieLink intermediate page
+### What needs to change
 
-A new page at `/genielink` will be created with:
-- A description of GenieLink (the text you provided about it being a free link-in-bio platform)
-- A prominent call-to-action button that links out to the external GenieLink site (you'll provide the URL later)
-- Styled consistently with the rest of the site
+The GenieLink cover image (`src/assets/cover-genielink.jpg`) needs to be regenerated to:
 
-The GenieLink card on the homepage will change from an external `<a>` tag to a React Router `<Link>` pointing to `/genielink`.
+1. **Match the visual style of the other two covers**: dark brown/black background with orange monoline line-art illustrations (same palette and technique as the Newsletter and AI Billboard covers)
+2. **Feature a genie lamp** as the central element on the homepage card
+3. The same image will also be used as the hero banner on the `/genielink` intermediate page
 
-### 2. Generate a new cover image matching the existing style
+### Image generation prompt
 
-A new cover will be generated using AI image generation to match the exact visual style of the other two covers:
-- **Dark brown/black background**
-- **Orange line-art illustration style** (flat, monoline icons)
-- **Theme**: Link/chain icons, bio-page mockup, or connected profile elements to represent GenieLink's purpose
+The AI image will be generated with a prompt targeting:
+- Dark brown/charcoal background (matching hex tones from the other covers)
+- Orange outline-only illustration style (no fills, thin strokes)
+- Central genie lamp with digital/link elements emanating from it (chains, link icons, connected nodes)
+- Landscape aspect ratio matching the other covers
 
-The new image will replace the current `src/assets/cover-genielink.jpg`.
-
-### Technical changes
+### Files changed
 
 | File | Change |
 |------|--------|
-| `src/pages/GenieLink.tsx` | New intermediate page with GenieLink description and external CTA button |
-| `src/App.tsx` | Add `/genielink` route |
-| `src/pages/Index.tsx` | Change `<a href="https://genielink.me">` to `<Link to="/genielink">` |
-| `src/assets/cover-genielink.jpg` | Regenerated cover image in matching dark + orange line-art style |
+| `src/assets/cover-genielink.jpg` | Regenerated with genie lamp in dark + orange line-art style |
+
+No code changes needed -- only the image asset is replaced.
 
