@@ -345,7 +345,7 @@ const Index = () => {
           </Link>
 
           {/* Card C - GenieLink */}
-          <a href="https://genielink.me" target="_blank" rel="noopener noreferrer" className="block group">
+          <Link to="/genielink" className="block group">
             <div className="bg-background/80 backdrop-blur-sm rounded-lg p-6 h-full border border-border hover:scale-105 hover:shadow-xl transition-all duration-300 transform relative">
               {isEditorMode && (
                 <Button
@@ -370,7 +370,7 @@ const Index = () => {
                 />
               </div>
             </div>
-          </a>
+          </Link>
         </div>
       </section>
 
