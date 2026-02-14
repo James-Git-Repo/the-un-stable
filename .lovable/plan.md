@@ -1,28 +1,25 @@
 
 
-## Update GenieLink Cover Image
+## Replace GenieLink Cover Image
 
-### What needs to change
+The GenieLink card on the homepage still displays the old "Coming Soon" lock/padlock image. It needs to be replaced with a **genie lamp** illustration that matches the visual style of the other two project covers:
 
-The GenieLink cover image (`src/assets/cover-genielink.jpg`) needs to be regenerated to:
+- **Newsletter cover**: dark brown background, orange monoline line-art of financial/chart icons
+- **AI Billboard cover**: dark brown background, orange monoline line-art of a VR figure with media icons
 
-1. **Match the visual style of the other two covers**: dark brown/black background with orange monoline line-art illustrations (same palette and technique as the Newsletter and AI Billboard covers)
-2. **Feature a genie lamp** as the central element on the homepage card
-3. The same image will also be used as the hero banner on the `/genielink` intermediate page
-
-### Image generation prompt
-
-The AI image will be generated with a prompt targeting:
-- Dark brown/charcoal background (matching hex tones from the other covers)
-- Orange outline-only illustration style (no fills, thin strokes)
-- Central genie lamp with digital/link elements emanating from it (chains, link icons, connected nodes)
-- Landscape aspect ratio matching the other covers
-
-### Files changed
+### What will change
 
 | File | Change |
 |------|--------|
-| `src/assets/cover-genielink.jpg` | Regenerated with genie lamp in dark + orange line-art style |
+| `src/assets/cover-genielink.jpg` | Regenerate with a genie lamp illustration in the same dark brown background + orange outline-only line-art style |
 
-No code changes needed -- only the image asset is replaced.
+### Image specification
+
+- Dark brown/charcoal background (matching the exact tones of the other two covers)
+- Orange monoline line-art (thin outlines, no fills)
+- Central genie lamp with magical elements (sparkles, links/chains, or connected nodes rising from the lamp)
+- No text overlays (no "Coming Soon" or any other text)
+- Same landscape aspect ratio as the other covers
+
+No code changes are needed -- only the image asset will be replaced. The existing `import genieLinkCover` and `<img>` references will automatically pick up the new file.
 
