@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import genieLinkCover from "@/assets/cover-genielink.jpg";
 import { Linkedin, Github, Youtube, Upload, Pencil } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useEditor } from "@/contexts/EditorContext";
@@ -361,19 +362,13 @@ const Index = () => {
               )}
               <h3 className="text-2xl font-bold font-body mb-3">GenieLink</h3>
               <p className="text-muted-foreground font-body mb-6">A free link-in-bio platform to centralize your online presence — no cost, no complexity.</p>
-            {projectCovers["coming-soon"].imageUrl ? (
               <div className="aspect-video rounded-lg overflow-hidden">
                 <img
-                  src={projectCovers["coming-soon"].imageUrl}
-                  alt="Coming soon cover"
+                  src={projectCovers["coming-soon"].imageUrl || genieLinkCover}
+                  alt="GenieLink cover"
                   className="w-full h-full object-cover"
                 />
               </div>
-            ) : (
-              <div className="aspect-video bg-gradient-to-br from-secondary/20 to-primary/20 rounded-lg overflow-hidden flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
-                <div className="w-32 h-32 rounded-full bg-gradient-to-br from-primary to-accent opacity-40 animate-pulse" />
-              </div>
-            )}
             </div>
           </a>
         </div>
