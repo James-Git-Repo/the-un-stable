@@ -42,16 +42,31 @@ const Post = () => {
     } else {
       setPost(data);
       
-      // Fetch related posts
+      // Fetch related posts - same tag first, then backfill with recent
       if (data) {
-        const { data: related } = await supabase
+        const { data: sameTag } = await supabase
           .from('Articles')
           .select('*')
           .eq('tag', data.tag)
           .neq('id', data.id)
-          .limit(2);
+          .order('published_at', { ascending: false })
+          .limit(3);
         
-        setRelatedPosts(related || []);
+        let combined = sameTag || [];
+        
+        if (combined.length < 3) {
+          const excludeIds = [data.id, ...combined.map(a => a.id)];
+          const { data: recent } = await supabase
+            .from('Articles')
+            .select('*')
+            .not('id', 'in', `(${excludeIds.join(',')})`)
+            .order('published_at', { ascending: false })
+            .limit(3 - combined.length);
+          
+          combined = [...combined, ...(recent || [])];
+        }
+        
+        setRelatedPosts(combined);
       }
     }
     setLoading(false);
@@ -137,6 +152,16 @@ const Post = () => {
       </div>
 
       <article className="max-w-3xl mx-auto">
+        {post.image_url && (
+          <div className="mb-6 sm:mb-8 overflow-hidden rounded-lg">
+            <img
+              src={post.image_url}
+              alt={post.title}
+              className="w-full aspect-video object-cover"
+            />
+          </div>
+        )}
+
         <div className="mb-6 sm:mb-8">
           <span className="inline-block px-3 py-1 text-xs sm:text-sm font-body font-medium rounded-none bg-primary/10 text-primary mb-3 sm:mb-4">
             {post.tag}
@@ -161,11 +186,11 @@ const Post = () => {
         <SafeHTML 
           html={post.content}
           className="prose prose-base sm:prose-lg dark:prose-invert max-w-none mb-8 sm:mb-10 md:mb-12 
-                     [&_p]:text-justify [&_p]:leading-normal
                      [&_p:empty]:min-h-[1rem]
                      [&_h1]:font-bold [&_h2]:font-bold [&_h3]:font-bold
                      [&_ul]:!list-disc [&_ul]:!pl-10 [&_ol]:!list-decimal [&_ol]:!pl-10
-                     [&_li]:!list-item [&_li]:!ml-0"
+                     [&_li]:!list-item [&_li]:!ml-0
+                     [&_img]:rounded-lg [&_img]:my-4"
         />
 
         <div className="border-t border-border pt-6 sm:pt-8 mb-6 sm:mb-8">
@@ -187,22 +212,33 @@ const Post = () => {
 
         {relatedPosts.length > 0 && (
           <div className="mt-8 sm:mt-10 md:mt-12">
-            <h2 className="text-xl sm:text-2xl font-body font-bold mb-4 sm:mb-6">Related Articles</h2>
-            <div className="grid gap-6">
+            <h2 className="text-xl sm:text-2xl font-body font-bold mb-4 sm:mb-6">Continue Reading</h2>
+            <div className="grid gap-4">
               {relatedPosts.map((related) => (
                 <Link key={related.id} to={`/post/${related.slug}`}>
-                  <Card className="p-6 hover:shadow-lg transition-shadow">
-                    <span className="inline-block px-3 py-1 text-xs font-body font-medium rounded-none bg-primary/10 text-primary mb-2">
-                      {related.tag}
-                    </span>
-                    <h3 className="text-xl font-body font-bold mb-2 hover:text-primary transition-colors">
-                      {related.title}
-                    </h3>
-                    <p className="font-body text-muted-foreground mb-2">{related.subtitle}</p>
-                    <div className="flex items-center gap-3 text-sm font-body text-muted-foreground">
-                      <span>{new Date(related.published_at).toLocaleDateString()}</span>
-                      <span>•</span>
-                      <span>{related.read_time}</span>
+                  <Card className="flex flex-col sm:flex-row overflow-hidden hover:shadow-lg transition-shadow">
+                    {related.image_url && (
+                      <div className="sm:w-48 sm:min-w-[12rem] aspect-video sm:aspect-auto overflow-hidden">
+                        <img
+                          src={related.image_url}
+                          alt={related.title}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    )}
+                    <div className="p-4 sm:p-5 flex flex-col justify-center">
+                      <span className="inline-block w-fit px-2.5 py-0.5 text-xs font-body font-medium uppercase tracking-wide bg-primary/5 text-primary border border-primary/20 rounded-none mb-2">
+                        {related.tag}
+                      </span>
+                      <h3 className="text-lg font-body font-bold mb-1 hover:text-primary transition-colors line-clamp-2">
+                        {related.title}
+                      </h3>
+                      <p className="text-sm font-body text-muted-foreground mb-2 line-clamp-2 text-justify">{related.subtitle}</p>
+                      <div className="flex items-center gap-3 text-xs font-body text-muted-foreground">
+                        <span>{new Date(related.published_at).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}</span>
+                        <span>•</span>
+                        <span>{related.read_time}</span>
+                      </div>
                     </div>
                   </Card>
                 </Link>
