@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { ArrowLeft, Upload } from "lucide-react";
+import { ArrowLeft, Upload, ImagePlus, Loader2 } from "lucide-react";
 
 const NewsletterNew = () => {
   const navigate = useNavigate();
@@ -20,6 +20,38 @@ const NewsletterNew = () => {
   const [coverImage, setCoverImage] = useState<File | null>(null);
   const [coverPreview, setCoverPreview] = useState("");
   const [saving, setSaving] = useState(false);
+  const [uploadingInline, setUploadingInline] = useState(false);
+  const inlineFileRef = useRef<HTMLInputElement>(null);
+  const contentRef = useRef<HTMLTextAreaElement>(null);
+
+  const handleInlineImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploadingInline(true);
+    try {
+      const fileExt = file.name.split('.').pop();
+      const fileName = `inline-${Date.now()}.${fileExt}`;
+      const filePath = `inline/${fileName}`;
+      const { error: uploadError } = await supabase.storage
+        .from('article-images')
+        .upload(filePath, file);
+      if (uploadError) throw uploadError;
+      const { data: { publicUrl } } = supabase.storage
+        .from('article-images')
+        .getPublicUrl(filePath);
+      const imgTag = `<img src="${publicUrl}" alt="Article image" style="max-width:100%; border-radius:8px; margin:16px 0;" />`;
+      const textarea = contentRef.current;
+      const pos = textarea?.selectionStart ?? content.length;
+      const newContent = content.slice(0, pos) + imgTag + content.slice(pos);
+      setContent(newContent);
+      toast({ title: "Immagine inserita", description: "L'immagine è stata caricata e inserita nel contenuto." });
+    } catch (err: any) {
+      toast({ title: "Errore", description: err.message || "Upload fallito.", variant: "destructive" });
+    } finally {
+      setUploadingInline(false);
+      e.target.value = '';
+    }
+  };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -211,7 +243,21 @@ const NewsletterNew = () => {
 
         <div>
           <Label htmlFor="content">Contenuto * (HTML supportato)</Label>
+          <div className="flex items-center gap-2 mt-1 mb-1">
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              disabled={uploadingInline}
+              onClick={() => inlineFileRef.current?.click()}
+            >
+              {uploadingInline ? <Loader2 className="w-4 h-4 animate-spin mr-1" /> : <ImagePlus className="w-4 h-4 mr-1" />}
+              Inserisci Immagine
+            </Button>
+            <input ref={inlineFileRef} type="file" accept="image/*" onChange={handleInlineImage} className="hidden" />
+          </div>
           <Textarea
+            ref={contentRef}
             id="content"
             value={content}
             onChange={(e) => setContent(e.target.value)}
