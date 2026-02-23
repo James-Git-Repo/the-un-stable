@@ -1,53 +1,29 @@
 
 
-## Enhance Newsletter Article Reading Experience
+## Add Inline Image Upload to Article Editor
 
-This plan covers three improvements to the article reading experience:
+Allow editors to insert images directly into the article body when creating or editing articles. Since the editor uses a standard `<textarea>` for HTML content, we will add an "Insert Image" button that uploads the selected image to Supabase Storage and inserts the corresponding `<img>` HTML tag into the textarea at the cursor position.
 
-### 1. Justify All Text
+### What will change
 
-Update the text alignment so all paragraph content in articles is justified (evenly aligned on both left and right margins). This applies to:
-- The article body content rendered via SafeHTML
-- The subtitle/dek text
-- The PostCard descriptions on listing pages
+| File | Change |
+|------|--------|
+| `src/pages/NewsletterNew.tsx` | Add an "Insert Image" button above the content textarea that opens a file picker, uploads the image to Supabase Storage (`article-images/inline/`), and inserts an `<img>` tag at the cursor position |
+| `src/pages/NewsletterEdit.tsx` | Same "Insert Image" button and upload logic added to the edit form |
 
-**Files changed:**
-- `src/components/SafeHTML.tsx` -- add `text-justify` to the base wrapper class
-- `src/styles/editor.css` -- ensure prose paragraph styles default to `text-align: justify`
-- `src/pages/Post.tsx` -- clean up redundant justify classes (already partially there)
+### How it works
 
-### 2. Add Cover Image at Top of Articles
+1. An "Insert Image" button (with an Image icon) appears in a small toolbar row just above the content textarea
+2. Clicking it opens a file picker (accept: `image/*`)
+3. The selected image is uploaded to `article-images/inline/{timestamp}.{ext}` in Supabase Storage
+4. On success, an `<img src="..." alt="Article image" style="max-width:100%; border-radius:8px; margin:16px 0;" />` tag is inserted into the textarea at the current cursor position
+5. A loading indicator shows during upload
+6. Images already render in articles because SafeHTML allows `img` tags
 
-Each article already has a `cover_image` (image_url) stored in Supabase. Currently it only shows on the card in the listing pages but not on the article page itself. We will display the cover image as a hero banner at the top of each article, giving readers a visual anchor.
+### Technical details
 
-**Files changed:**
-- `src/pages/Post.tsx` -- add an `<img>` block showing `post.image_url` as a full-width hero image above the article title, with a 16:9 aspect ratio and rounded corners
-- `src/components/SafeHTML.tsx` -- add `img` to `ALLOWED_TAGS` so any inline images in article HTML content are also rendered
+- Reuse the existing `supabase.storage.from('article-images')` bucket (already used for cover images)
+- Use a hidden `<input type="file">` triggered by the button click via a ref
+- Insert HTML at cursor position using `textarea.selectionStart` to splice the tag into the content string
+- Add a small `uploading` state to disable the button during upload and show feedback via toast
 
-### 3. Expand "Related Articles" Section
-
-Currently the Post page fetches only 2 related articles with the same tag. We will improve this to:
-- Increase the limit to 3 related articles
-- If fewer than 3 articles share the same tag, backfill with the most recent articles from other tags
-- Show the cover image thumbnail alongside each related article card
-- Add a "Continue Reading" label to make the section more inviting
-
-**Files changed:**
-- `src/pages/Post.tsx` -- update the related posts fetching logic to get up to 3 same-tag articles, then backfill from recent articles if needed. Update the related posts UI to include cover image thumbnails and a horizontal card layout.
-
----
-
-### Technical Details
-
-**SafeHTML.tsx changes:**
-- Add `img` and `figure`, `figcaption` to `ALLOWED_TAGS`
-- Add `src`, `alt`, `width`, `height` to `ALLOWED_ATTR`
-- Add `text-justify` to the base wrapper className
-
-**Post.tsx changes:**
-- Add hero image block: `{post.image_url && <img src={post.image_url} ... />}` before the title
-- Related posts logic: fetch 3 same-tag articles; if result count < 3, run a second query for recent articles excluding current and already-fetched IDs, merge results
-- Related posts UI: switch from vertical text-only cards to horizontal cards with thumbnail image on the left, title/subtitle/date on the right
-
-**editor.css changes:**
-- Update `.prose p` default to include `text-align: justify`
