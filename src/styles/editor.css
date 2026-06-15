@@ -243,3 +243,38 @@ article ul ul ul,
 .ProseMirror ::selection {
   background: hsl(var(--primary) / 0.2);
 }
+
+/* Article Image Normalization
+   Force all inline images (old and new) inside article content to render
+   at the full text-column width, centered, with consistent spacing. */
+.prose img,
+.ProseMirror img {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  max-width: 100% !important;
+  margin: 1.5rem auto !important;
+  border-radius: 8px !important;
+  object-fit: contain !important;
+}
+
+.prose figure,
+.ProseMirror figure {
+  display: block;
+  width: 100%;
+  margin: 1.5rem auto;
+}
+
+.prose figure img,
+.ProseMirror figure img {
+  margin: 0 auto !important;
+}
+
+.prose figcaption,
+.ProseMirror figcaption {
+  text-align: center;
+  font-size: 0.875rem;
+  color: hsl(var(--muted-foreground));
+  margin-top: 0.5rem;
+  font-style: italic;
+}
