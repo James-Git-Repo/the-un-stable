@@ -1,0 +1,23 @@
+# The (un)Stable Net
+
+> Weekly briefs on European equities, macro signals, technology and AI by Jacopo Berton — clear, actionable analysis with no noise.
+
+The (un)Stable Net publishes a weekly European market newsletter, long-form articles on markets, tech and AI, plus side projects (the AI Billboard / Million Slots, and GenieLink, a free link-in-bio platform).
+
+## Pages
+
+- [Home](/): Overview of the project and active initiatives.
+- [About](/about): Who Jacopo is and what the project is about.
+- [Articles](/articles): Latest published articles across markets, tech and AI.
+- [Archive](/archive): Full archive of published articles, filterable by year and tag.
+- [Newsletter](/newsletter): Weekly European Market Movers newsletter.
+- [Subscribe](/subscribe): Sign up for the weekly newsletter.
+- [Contribute](/contribute): Submit a guest article or pitch.
+- [Resources](/resources): Curated reading list, tools and references.
+- [AI Billboard Project](/million-slots): The Million Slots / AI Billboard side project.
+- [GenieLink](/genielink): Free link-in-bio platform.
+
+## Optional
+
+- [Terms](/legal/terms): Terms of use.
+- [Privacy](/legal/privacy): Privacy policy.
