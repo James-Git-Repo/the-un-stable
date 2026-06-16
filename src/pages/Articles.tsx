@@ -8,6 +8,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useEditor } from "@/contexts/EditorContext";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
+import { SEO } from "@/components/SEO";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -55,9 +56,15 @@ const Home = () => {
 
   return (
     <main>
+      <SEO
+        title="Latest Articles — The (un)Stable Net"
+        description="Latest analysis on European equities, macro signals, technology and AI from The (un)Stable Net."
+        path="/articles"
+      />
       <Hero />
       
       <section className="container mx-auto px-4 py-8 sm:py-10 md:py-12">
+        <h2 className="sr-only">Latest Articles</h2>
         <div className="flex justify-between items-center mb-6">
           <FilterBar
             searchQuery={searchQuery}

@@ -6,6 +6,7 @@ import { useEditor } from "@/contexts/EditorContext";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { SEO } from "@/components/SEO";
 
 const Newsletter = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -53,6 +54,7 @@ const Newsletter = () => {
 
   return (
     <main className="container mx-auto px-4 py-8 sm:py-10 md:py-12">
+      <SEO title={"Newsletter — The (un)Stable Net"} description={"Weekly European Market Movers newsletter: macro signals, sector rotations and clear, actionable analysis."} path={"/newsletter"} />
       <div className="mb-8">
         <h1 className="text-4xl md:text-5xl font-bold mb-4">Newsletter</h1>
         <p className="text-xl text-muted-foreground">European Market Movers — weekly macro & market signals</p>

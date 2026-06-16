@@ -2,10 +2,12 @@ import { Link } from "react-router-dom";
 import { ExternalLink, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import genieLinkCover from "@/assets/cover-genielink.jpg";
+import { SEO } from "@/components/SEO";
 
 const GenieLink = () => {
   return (
     <main className="min-h-screen bg-background">
+      <SEO title={"GenieLink — Free link-in-bio platform"} description={"GenieLink is a free link-in-bio platform to centralize your online presence — no cost, no complexity."} path={"/genielink"} />
       {/* Hero Section */}
       <section className="relative">
         <div className="aspect-[3/1] w-full overflow-hidden">

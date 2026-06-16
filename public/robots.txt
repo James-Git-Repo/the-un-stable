@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /newsletter/new
+Disallow: /newsletter/*/edit
 
-Sitemap: https://www.the-un-stable.net/sitemap.xml
+Sitemap: https://the-un-stable.net/sitemap.xml
