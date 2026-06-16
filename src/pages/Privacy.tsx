@@ -1,5 +1,6 @@
-const Privacy = () => {
 import { SEO } from "@/components/SEO";
+
+const Privacy = () => {
   return (
     <main className="container mx-auto px-4 py-16">
       <SEO title={"Privacy Policy — The (un)Stable Net"} description={"Privacy policy for The (un)Stable Net."} path={"/legal/privacy"} />
