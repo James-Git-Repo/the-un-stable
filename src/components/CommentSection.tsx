@@ -10,7 +10,6 @@ import { useEditor } from "@/contexts/EditorContext";
 interface Comment {
   id: string;
   user_name: string;
-  user_email: string;
   content: string;
   created_at: string;
 }
@@ -37,7 +36,7 @@ export const CommentSection = ({ articleId }: CommentSectionProps) => {
     try {
       const { data, error } = await supabase
         .from("comments")
-        .select("*")
+        .select("id, user_name, content, created_at")
         .eq("article_id", articleId)
         .order("created_at", { ascending: false });
 
