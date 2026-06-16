@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { Linkedin, Youtube, Github } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { SEO } from "@/components/SEO";
 
 export default function About() {
   const { isEditorMode } = useEditor();
@@ -222,6 +223,11 @@ export default function About() {
 
   return (
     <>
+      <SEO
+        title="About Jacopo and The (un)Stable Net"
+        description="Meet Jacopo Berton — Swiss–Italian writer behind The (un)Stable Net, a project at the intersection of European markets, technology, AI and craft."
+        path="/about"
+      />
       {/* Main Content */}
       <main className="flex-1">
         {/* Split Hero Section - Half Text, Half Photo */}

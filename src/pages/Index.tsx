@@ -9,6 +9,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { SEO } from "@/components/SEO";
 
 const Index = () => {
   const { isEditorMode } = useEditor();
@@ -120,6 +121,11 @@ const Index = () => {
 
   return (
     <div className="min-h-screen relative overflow-hidden">
+      <SEO
+        title="The (un)Stable Net — Insights on EU Markets, Tech & AI"
+        description="Weekly briefs on European equities, macro signals, technology and AI — clear, actionable analysis with no noise, by Jacopo Berton."
+        path="/"
+      />
       {/* Circuit board animated background */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#D4A574] via-[#C89B68] to-[#B8865A] dark:from-[#2a1f15] dark:via-[#3d2a1a] dark:to-[#1f1812]" />
 
@@ -236,7 +242,7 @@ const Index = () => {
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-20 md:py-32 relative z-10">
         <h1 className="text-5xl md:text-7xl font-bold font-body mb-6 bg-gradient-to-r from-[#FFA94D] via-[#FF8C3D] to-[#FF6B2B] bg-clip-text text-transparent">
-          The (un)Stable Net
+          The (un)Stable Net — Insights on Markets, Tech & AI
         </h1>
         <p className="text-xl md:text-2xl font-body text-foreground max-w-3xl">
           A blog about financial markets, tech & AI and content creation
@@ -256,6 +262,7 @@ const Index = () => {
                   size="sm"
                   variant="secondary"
                   className="absolute top-2 right-2 z-10"
+                  aria-label="Edit newsletter cover"
                   onClick={(e) => {
                     e.preventDefault();
                     setEditingProject("newsletter");
@@ -305,6 +312,7 @@ const Index = () => {
                   size="sm"
                   variant="secondary"
                   className="absolute top-2 right-2 z-10"
+                  aria-label="Edit Million Slots cover"
                   onClick={() => {
                     setEditingProject("million-slots");
                   }}

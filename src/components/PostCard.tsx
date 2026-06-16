@@ -74,6 +74,7 @@ export const PostCard = ({ id, slug, title, subtitle, content, author, dek, tag,
             variant="outline"
             size="icon"
             className="bg-background"
+            aria-label="Edit article"
             onClick={(e) => {
               e.preventDefault();
               handleEdit();
@@ -87,6 +88,7 @@ export const PostCard = ({ id, slug, title, subtitle, content, author, dek, tag,
               <Button
                 variant="destructive"
                 size="icon"
+                aria-label="Delete article"
                 onClick={(e) => e.preventDefault()}
               >
                 <Trash2 className="h-4 w-4" />
