@@ -192,7 +192,7 @@ export default function Resources() {
                   )}
                   {isEditorMode && (
                     <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-auto">
-                      <Button 
+                      <Button aria-label="Edit resource" 
                         size="sm" 
                         variant="outline" 
                         onClick={(e) => {
@@ -202,7 +202,7 @@ export default function Resources() {
                       >
                         <Edit className="w-4 h-4" />
                       </Button>
-                      <Button
+                      <Button aria-label="Delete resource"
                         size="sm"
                         variant="destructive"
                         onClick={(e) => {
@@ -251,7 +251,7 @@ export default function Resources() {
                   )}
                   {isEditorMode && (
                     <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-auto">
-                      <Button 
+                      <Button aria-label="Edit resource" 
                         size="sm" 
                         variant="outline" 
                         onClick={(e) => {
@@ -261,7 +261,7 @@ export default function Resources() {
                       >
                         <Edit className="w-4 h-4" />
                       </Button>
-                      <Button
+                      <Button aria-label="Delete resource"
                         size="sm"
                         variant="destructive"
                         onClick={(e) => {
@@ -302,7 +302,7 @@ export default function Resources() {
                   </div>
                   {isEditorMode && (
                     <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-auto">
-                      <Button 
+                      <Button aria-label="Edit resource" 
                         size="sm" 
                         variant="outline" 
                         onClick={(e) => {
@@ -312,7 +312,7 @@ export default function Resources() {
                       >
                         <Edit className="w-4 h-4" />
                       </Button>
-                      <Button
+                      <Button aria-label="Delete resource"
                         size="sm"
                         variant="destructive"
                         onClick={(e) => {
