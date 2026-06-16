@@ -10,6 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Podcast, BookOpen, Link2, Plus, Edit, Trash } from "lucide-react";
+import { SEO } from "@/components/SEO";
 
 interface Resource {
   id: number;
@@ -152,6 +153,7 @@ export default function Resources() {
 
   return (
     <main className="min-h-screen bg-background">
+      <SEO title={"Resources — The (un)Stable Net"} description={"Curated books, articles and tools on European markets, technology and AI."} path={"/resources"} />
       {/* Hero Section */}
       <div className="container mx-auto px-4 py-16 md:py-24">
         <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-primary mb-6 font-body">

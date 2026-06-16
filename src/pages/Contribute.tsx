@@ -6,6 +6,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { Newspaper } from "lucide-react";
+import { SEO } from "@/components/SEO";
 
 const Contribute = () => {
   const [formData, setFormData] = useState({
@@ -51,6 +52,7 @@ const Contribute = () => {
 
   return (
     <main className="container mx-auto px-4 py-16">
+      <SEO title={"Contribute — The (un)Stable Net"} description={"Pitch a guest article or contribute to The (un)Stable Net — markets, technology, AI and craft."} path={"/contribute"} />
       <div className="max-w-3xl mx-auto">
         <div className="text-center mb-12">
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mb-6">

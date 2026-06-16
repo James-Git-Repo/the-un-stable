@@ -9,6 +9,7 @@ import { useEditor } from "@/contexts/EditorContext";
 import { RichTextEditor } from "@/components/RichTextEditor";
 import { SafeHTML } from "@/components/SafeHTML";
 import { supabase } from "@/integrations/supabase/client";
+import { SEO } from "@/components/SEO";
 
 const Subscribe = () => {
   const [email, setEmail] = useState("");
@@ -75,6 +76,7 @@ const Subscribe = () => {
 
   return (
     <main className="container mx-auto px-4 py-16">
+      <SEO title={"Subscribe — The (un)Stable Net"} description={"Sign up to receive the weekly European Market Movers newsletter from The (un)Stable Net."} path={"/subscribe"} />
       <div className="max-w-2xl mx-auto">
         <div className="text-center mb-12">
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mb-6">

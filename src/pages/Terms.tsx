@@ -1,6 +1,8 @@
 const Terms = () => {
+import { SEO } from "@/components/SEO";
   return (
     <main className="container mx-auto px-4 py-16">
+      <SEO title={"Terms & Conditions — The (un)Stable Net"} description={"Terms and conditions for using The (un)Stable Net."} path={"/legal/terms"} />
       <div className="max-w-3xl mx-auto prose prose-lg dark:prose-invert">
         <h1>Terms & Conditions</h1>
         
