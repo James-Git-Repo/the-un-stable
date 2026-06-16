@@ -238,10 +238,10 @@ export default function About() {
                 {/* Left: Title Text */}
                 <div className="order-1">
                   <h1 className="text-3xl md:text-5xl font-bold font-body mb-6 bg-gradient-to-r from-[#FFA94D] via-[#FF8C3D] to-[#FF6B2B] bg-clip-text text-transparent leading-tight">
-                    In the end it always comes down to the same old tradeoff:
+                    About Jacopo and The (un)Stable Net
                   </h1>
                   <p className="text-xl md:text-2xl font-body text-foreground/90 italic">
-                    what's more valuable for you time or money?
+                    In the end it always comes down to the same old tradeoff: what's more valuable for you, time or money?
                   </p>
                 </div>
 
