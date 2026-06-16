@@ -8,6 +8,7 @@ import { useEditor } from "@/contexts/EditorContext";
 import { SafeHTML } from "@/components/SafeHTML";
 import { useToast } from "@/hooks/use-toast";
 import { CommentSection } from "@/components/CommentSection";
+import { SEO } from "@/components/SEO";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -123,6 +124,30 @@ const Post = () => {
 
   return (
     <main className="container mx-auto px-4 py-6 sm:py-8">
+      <SEO
+        title={`${post.title} — The (un)Stable Net`}
+        description={post.subtitle || `Read "${post.title}" on The (un)Stable Net.`}
+        path={`/post/${post.slug}`}
+        image={post.image_url}
+        type="article"
+        publishedTime={post.published_at}
+        author={post.author}
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "Article",
+          headline: post.title,
+          description: post.subtitle || undefined,
+          image: post.image_url || undefined,
+          datePublished: post.published_at,
+          author: { "@type": "Person", name: post.author || "Editorial Team" },
+          publisher: {
+            "@type": "Organization",
+            name: "The (un)Stable Net",
+            url: "https://the-un-stable.net/",
+          },
+          mainEntityOfPage: `https://the-un-stable.net/post/${post.slug}`,
+        }}
+      />
       <div className="flex justify-between items-center mb-6 sm:mb-8">
         <Link to="/" className="inline-flex items-center text-sm sm:text-base text-muted-foreground hover:text-foreground transition-colors">
           <ArrowLeft className="w-4 h-4 mr-2" />
@@ -157,6 +182,9 @@ const Post = () => {
             <img
               src={post.image_url}
               alt={post.title}
+              fetchPriority="high"
+              width={1200}
+              height={675}
               className="w-full aspect-video object-cover"
             />
           </div>

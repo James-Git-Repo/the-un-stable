@@ -10,6 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { SEO } from "@/components/SEO";
 
 const Archive = () => {
   const navigate = useNavigate();
@@ -77,10 +78,16 @@ const Archive = () => {
 
   return (
     <main className="container mx-auto px-4 py-8 sm:py-10 md:py-12">
+      <SEO
+        title="Archive — The (un)Stable Net"
+        description="Full archive of articles on European markets, technology and AI, filterable by year and tag."
+        path="/archive"
+      />
       <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4">Archive</h1>
       <p className="text-lg sm:text-xl text-muted-foreground mb-6 sm:mb-8">
         Browse all published articles
       </p>
+      <h2 className="sr-only">All Articles</h2>
 
       <div className="space-y-4 mb-8">
         <FilterBar
